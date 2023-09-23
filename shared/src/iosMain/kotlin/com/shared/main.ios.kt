@@ -1,12 +1,12 @@
 package com.shared
 
-import androidx.compose.ui.window.ComposeUIViewController
 import com.shared.ui.AppCompose
+import moe.tlaster.precompose.PreComposeApplication
 import platform.UIKit.UIViewController
 
 @Suppress("FunctionName", "unused")
 fun MainViewController(): UIViewController {
-    return ComposeUIViewController {
+    return PreComposeApplication {
         AppCompose()
     }
 }

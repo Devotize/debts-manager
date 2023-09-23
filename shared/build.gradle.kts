@@ -36,7 +36,9 @@ kotlin {
                 api(compose.animation)
 
                 api(libs.moko.resources)
-
+                api(libs.precompose.core)
+                api(libs.precompose.koin)
+                api(libs.precompose.viewmodel)
             }
         }
 
