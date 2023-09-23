@@ -1,0 +1,86 @@
+[versions]
+# Core version
+agp = "8.1.1"
+kotlin = "1.9.10"
+versionsPlugin = "0.46.0"
+
+# Common versions
+composeMultiplatform = "1.5.1"
+
+coroutines = "1.7.3"
+koin = "3.4.3"
+ktor = "2.3.3"
+serialization = "1.5.1"
+material = "1.9.0"
+multiplatformResources = "0.23.0"
+kmLogging = "1.3.0"
+composeBom = "2023.09.01"
+composeCompiler = "1.5.3"
+moko = "0.23.0"
+
+# Android versions
+androidxCore = "1.12.0"
+activity = "1.7.2"
+
+# Root versions
+versionCode = "001"
+versionName = "0.0.1"
+# Sdk version
+compileSdk = "34"
+targetSdk = "34"
+minSdk = "23"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+
+[libraries]
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+kotlinx-serialization-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-core", version.ref = "serialization" }
+
+ktor-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
+ktor-okhttp = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+ktor-ios = { group = "io.ktor", name = "ktor-client-ios", version.ref = "ktor" }
+ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
+ktor-logging = { group = "io.ktor", name = "ktor-client-logging", version.ref = "ktor" }
+ktor-encoding = { group = "io.ktor", name = "ktor-client-encoding", version.ref = "ktor" }
+ktor-contentNegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-cio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-serializationJson = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+
+androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
+
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-compiler = { group = "androidx.compose.compiler", name = "compiler", version.ref = "composeCompiler" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-uiTooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+
+androidx-activity = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
+
+kotlinGradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+androidBuildToolsPlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+versionsPlugin = { group = "com.github.ben-manes", name = "gradle-versions-plugin", version.ref = "versionsPlugin" }
+
+moko-resources = { group = "dev.icerock.moko", name = "resources-compose", version.ref = "moko" }
+
+# Material Design
+androidx-compose-material = { group = "androidx.compose.material", name = "material" }
+androidx-compose-materialIconsCore = { group = "androidx.compose.material", name = "material-icons-core" }
+androidx-compose-materialIconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+km-logging = { group = "org.lighthousegames", name = "logging", version.ref = "kmLogging" }
+
+[plugins]
+android-test = { id = "com.android.test", version.ref = "agp" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+multiplatformResources = { id = "dev.icerock.mobile.multiplatform-resources", version.ref = "multiplatformResources" }
+versionsPlugin = { id = "com.github.ben-manes.versions", version.ref = "versionsPlugin" }
