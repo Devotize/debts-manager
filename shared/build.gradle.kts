@@ -17,7 +17,7 @@ kotlin {
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
-        version = "0.0.1"
+        version = "1.0.0"
         ios.deploymentTarget = "15.2"
         podfile = project.file("../iosApp/Podfile")
         framework {
@@ -29,6 +29,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material)
+                api(compose.ui)
+                api(compose.animation)
 
                 api(libs.moko.resources)
 
