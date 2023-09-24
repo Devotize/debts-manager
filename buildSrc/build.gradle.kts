@@ -5,6 +5,7 @@ plugins {
 dependencies {
     implementation(libs.kotlinGradlePlugin)
     implementation(libs.androidBuildToolsPlugin)
+    implementation(libs.dokkaPlugin)
     implementation(libs.versionsPlugin)
 }
 kotlin {

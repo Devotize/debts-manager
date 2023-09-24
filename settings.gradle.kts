@@ -24,5 +24,12 @@ dependencyResolutionManagement {
 }
 
 
+fun includeFeatureModules(name: String) {
+    include(":Feature${name}Api")
+    include(":Feature${name}Impl")
+}
+
 include(":androidApp")
 include(":shared")
+include(":Utils")
+includeFeatureModules("Navigation")

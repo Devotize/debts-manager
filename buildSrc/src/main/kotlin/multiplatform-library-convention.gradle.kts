@@ -6,8 +6,8 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     id("android-base-convention")
-    id("com.android.library")
     kotlin("multiplatform")
+    id("org.jetbrains.dokka")
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
