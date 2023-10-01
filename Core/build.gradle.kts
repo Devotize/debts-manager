@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "feature.navigation.impl"
+    namespace = "core"
 }
 
 kotlin {
@@ -13,8 +13,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.koin.core)
-                implementation(projects.utils)
             }
         }
     }

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.feature.navigation.api"
+    namespace = "feature.navigation.api"
 }
 
 kotlin {

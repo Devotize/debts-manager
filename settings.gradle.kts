@@ -32,4 +32,7 @@ fun includeFeatureModules(name: String) {
 include(":androidApp")
 include(":shared")
 include(":Utils")
+include(":DI")
+include(":Core")
 includeFeatureModules("Navigation")
+includeFeatureModules("Settings")

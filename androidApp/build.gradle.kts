@@ -39,13 +39,14 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(projects.shared)
 
     api(compose.runtime)
     api(compose.foundation)
     api(compose.material)
     api(compose.ui)
     api(compose.animation)
+    implementation(libs.koin.core)
     implementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.activity)
 }

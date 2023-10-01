@@ -7,14 +7,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.shared.utils.rememberKoin
+import feature.settings.api.ui.SettingsStore
 
 @Composable
-fun SettingsScene(onClick: () -> Unit) {
+fun SettingsScene(
+    store: SettingsStore = rememberKoin(),
+    onClick: () -> Unit,
+) {
+    val state by store.state.collectAsState()
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.secondary)) {
         Text(
             modifier = Modifier.clickable { onClick.invoke() },
-            text = "This is settings scene",
+            text = state.message,
         )
     }
 }
