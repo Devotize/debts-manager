@@ -1,6 +1,6 @@
 package com.shared
 
-import com.shared.ui.AppCompose
+import com.shared.app_entry.AppCompose
 import moe.tlaster.precompose.PreComposeApplication
 import platform.UIKit.UIViewController
 

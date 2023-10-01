@@ -1,22 +1,23 @@
-package com.shared.ui
+package com.shared.app_entry
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.shared.navigation.AppNavigation
 import com.shared.theme.CustomAppTheme
+import moe.tlaster.precompose.navigation.rememberNavigator
 
 @Composable
-fun AppCompose() = ContentScreen()
+fun AppCompose() = Content()
 
 
 @Composable
-private fun ContentScreen() {
+private fun Content() {
+    val navigator = rememberNavigator()
     CustomAppTheme {
         val scaffoldState = rememberScaffoldState()
         Scaffold(
@@ -26,9 +27,7 @@ private fun ContentScreen() {
             scaffoldState = scaffoldState,
             drawerGesturesEnabled = false,
             content = {
-                Box {
-                    Text("Hello from shared compose multiplatofrm")
-                }
+                AppNavigation(navigator)
             }
         )
     }
