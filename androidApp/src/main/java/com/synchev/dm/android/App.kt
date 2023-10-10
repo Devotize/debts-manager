@@ -14,6 +14,7 @@ class App : Application() {
     }
 
     private fun initDI() {
+        println("xertz: here")
         initKoin(
             module {
                 single { this@App }.bind<Context>()

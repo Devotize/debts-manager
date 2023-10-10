@@ -10,6 +10,7 @@ val EliteSecondary = Color(0XFFA7FF5E)
 val EliteSurface = Color(0xFFFDFDFD)
 val EliteError = Color(0xFFDA0707)
 val EliteTextPrimary = Color(0xFF3F2727)
+val EliteDivider = Color(0xFFf2dae5)
 
 //Theme colors
 val primary = EliteAccent

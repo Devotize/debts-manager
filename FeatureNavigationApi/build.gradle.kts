@@ -14,6 +14,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(projects.utils)
+                implementation(libs.precompose.core)
             }
         }
     }

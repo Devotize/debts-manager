@@ -1,6 +1,5 @@
 package com.di
 
-import feature.navigation.impl.di.DI
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 
@@ -9,6 +8,6 @@ fun initKoin(module: Module) = startKoin {
 }
 
 private val appModules = listOf(
-    DI,
-    featre.settings.impl.di.DI
+    featre.settings.impl.di.DI,
+    feature.navigation.impl.di.DI,
 )

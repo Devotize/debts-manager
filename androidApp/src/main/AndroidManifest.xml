@@ -6,6 +6,7 @@
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name="com.synchev.dm.android.App"
         tools:ignore="DataExtractionRules"
         tools:targetApi="s">
         <activity

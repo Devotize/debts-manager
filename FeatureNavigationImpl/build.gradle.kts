@@ -15,6 +15,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.koin.core)
                 implementation(projects.utils)
+                implementation(projects.featureNavigationApi)
+                implementation(libs.precompose.core)
             }
         }
     }

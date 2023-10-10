@@ -46,3 +46,13 @@ val XXXLargePadding = 32.dp
  * 48dp
  */
 val XXXXPadding = 48.dp
+
+/**
+ * 56dp
+ */
+val BottomBarHeight = 56.dp
+
+/**
+ * 28dp
+ */
+val BottomBarImageSize = 28.dp

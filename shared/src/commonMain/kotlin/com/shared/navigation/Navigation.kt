@@ -1,40 +1,32 @@
 package com.shared.navigation
 
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import com.shared.ui.scenes.HomeScene
 import com.shared.ui.scenes.SettingsScene
+import feature.navigation.api.router.AppScene
+import feature.navigation.api.router.Router
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
-import moe.tlaster.precompose.navigation.transition.NavTransition
 
 @Composable
-internal fun AppNavigation(navigator: Navigator) {
+internal fun AppNavigation(navigator: Navigator, router: Router) {
+    val initialRoute = remember { router.currentScene.value }
     NavHost(
         navigator = navigator,
-        initialRoute = AppScenes.Home.route
+        initialRoute = initialRoute.route,
     ) {
-        scene(AppScenes.Home.route) {
+        scene(AppScene.Home.route) {
             HomeScene {
-                navigator.navigate(AppScenes.Settings.route)
+                router.navigateTo(AppScene.Settings)
             }
         }
         scene(
-            AppScenes.Settings.route,
-            navTransition = NavTransition(
-                createTransition = slideInHorizontally(initialOffsetX = { it }),
-                destroyTransition = slideOutHorizontally(targetOffsetX = { 0 }),
-                pauseTransition = scaleOut(targetScale = 0.9f),
-                resumeTransition = scaleIn(initialScale = 0.9f),
-                exitTargetContentZIndex = 1f,
-            )
+            AppScene.Settings.route,
         ) {
             SettingsScene(
                 onClick = {
-                    navigator.navigate(AppScenes.Home.route)
+                    router.navigateTo(AppScene.Home)
                 }
             )
         }
