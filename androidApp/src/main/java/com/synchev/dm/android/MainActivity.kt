@@ -13,4 +13,7 @@ class MainActivity : PreComposeActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed() //TODO link with router
+    }
 }
