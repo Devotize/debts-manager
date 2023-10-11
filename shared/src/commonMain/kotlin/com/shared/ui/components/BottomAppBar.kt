@@ -29,7 +29,7 @@ import com.shared.components.DividerFull
 import com.shared.theme.BottomBarHeight
 import com.shared.theme.BottomBarImageSize
 import com.shared.theme.C3_10Medium
-import com.shared.theme.EliteTextPrimary
+import com.shared.theme.EliteTextPrimaryLight
 import com.sychev.db.common.MR
 import dev.icerock.moko.resources.StringResource
 import dev.icerock.moko.resources.compose.stringResource
@@ -83,7 +83,7 @@ fun RowScope.BottomBarItem(
     isSelected: Boolean,
     onClick: () -> Unit,
 ) {
-    val color = if (isSelected) MaterialTheme.colors.primary else EliteTextPrimary
+    val color = if (isSelected) MaterialTheme.colors.primary else EliteTextPrimaryLight
     Box(
         modifier = Modifier
             .weight(1f)

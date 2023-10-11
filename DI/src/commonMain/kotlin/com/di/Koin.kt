@@ -8,6 +8,7 @@ fun initKoin(module: Module) = startKoin {
 }
 
 private val appModules = listOf(
-    featre.settings.impl.di.DI,
+    feature.settings.impl.di.DI,
     feature.navigation.impl.di.DI,
+    feature.preferences.impl.DI,
 )

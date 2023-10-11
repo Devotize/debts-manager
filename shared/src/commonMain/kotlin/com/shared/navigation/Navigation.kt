@@ -17,18 +17,12 @@ internal fun AppNavigation(navigator: Navigator, router: Router) {
         initialRoute = initialRoute.route,
     ) {
         scene(AppScene.Home.route) {
-            HomeScene {
-                router.navigateTo(AppScene.Settings)
-            }
+            HomeScene()
         }
         scene(
             AppScene.Settings.route,
         ) {
-            SettingsScene(
-                onClick = {
-                    router.navigateTo(AppScene.Home)
-                }
-            )
+            SettingsScene()
         }
     }
 }

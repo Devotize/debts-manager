@@ -5,16 +5,15 @@ plugins {
 }
 
 android {
-    namespace = "feature.settings.api"
+    namespace = "feature.preferences.api"
 }
 
 kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                api(libs.russhwolf.multiplatformSettings.coroutines)
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(projects.featurePreferencesApi)
-                api(projects.core)
             }
         }
     }

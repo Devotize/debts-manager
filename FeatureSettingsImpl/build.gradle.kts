@@ -15,6 +15,8 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.koin.core)
                 implementation(projects.featureSettingsApi)
+                implementation(projects.featurePreferencesApi)
+                implementation(libs.russhwolf.multiplatformSettings.coroutines)
             }
         }
     }

@@ -10,19 +10,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.shared.theme.EliteDivider
+import com.shared.theme.EliteDividerLight
 import com.shared.theme.XLargePadding
 
 @Composable
 fun Divider(
     modifier: Modifier = Modifier,
-    color: Color = EliteDivider,
+    color: Color = EliteDividerLight,
 ) = DividerFull(modifier.padding(horizontal = XLargePadding), color)
 
 @Composable
 fun DividerFull(
     modifier: Modifier = Modifier,
-    color: Color = EliteDivider
+    color: Color = EliteDividerLight
 ) {
     Box(
         modifier = modifier
@@ -35,7 +35,7 @@ fun DividerFull(
 @Composable
 fun DividerVertical(
     modifier: Modifier = Modifier,
-    color: Color = EliteDivider
+    color: Color = EliteDividerLight
 ) {
     Box(
         modifier = modifier

@@ -101,4 +101,5 @@ fun sharedModules() = listOf(
     projects.core,
     projects.featureSettingsApi,
     projects.featureNavigationApi,
+    projects.featurePreferencesApi,
 )

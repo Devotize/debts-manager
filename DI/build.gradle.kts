@@ -16,6 +16,7 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(projects.featureNavigationImpl)
                 implementation(projects.featureSettingsImpl)
+                implementation(projects.featurePreferencesImpl)
             }
         }
     }

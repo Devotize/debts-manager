@@ -18,16 +18,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeScene(onClick: () -> Unit) {
+fun HomeScene() {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     )
     val scope = rememberCoroutineScope()
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
-            modifier = Modifier.clickable {
-                onClick.invoke()
-            },
+            modifier = Modifier,
             text = "This is home scene",
         )
         Spacer(Modifier.height(24.dp))
