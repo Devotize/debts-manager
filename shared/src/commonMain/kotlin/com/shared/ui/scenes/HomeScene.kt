@@ -39,7 +39,7 @@ fun HomeScene() {
         )
     }
 
-    ModalBottomSheetLayout(
+    ModalBottomSheetLayout( // TODO move to global appScene
         sheetContent = {
             Text("This is sheet content")
         },
