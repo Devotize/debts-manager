@@ -2,11 +2,10 @@
 plugins {
     `multiplatform-library-convention`
     alias(libs.plugins.kotlinx.serialization)
-    id("org.jetbrains.compose")
 }
 
 android {
-    namespace = "feature.navigation.api"
+    namespace = "feature.home.api"
 }
 
 kotlin {
@@ -15,12 +14,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(projects.utils)
-                implementation(libs.precompose.core)
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material)
-                implementation(compose.ui)
-                implementation(compose.animation)
+                implementation(projects.core)
             }
         }
     }

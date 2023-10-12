@@ -5,23 +5,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import feature.home.api.ui.HomeStore
 import kotlinx.coroutines.launch
+import utils.getSingle
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeScene() {
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-    )
+fun HomeScene(store: HomeStore = getSingle()) {
+
     val scope = rememberCoroutineScope()
     Column(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -32,19 +27,11 @@ fun HomeScene() {
         Text(
             modifier = Modifier.clickable {
                 scope.launch {
-                    bottomSheetState.show()
+                    store.dispatch(HomeStore.OpenBottomSheet)
                 }
             },
             text = "Open Bottom Sheet"
         )
     }
 
-    ModalBottomSheetLayout( // TODO move to global appScene
-        sheetContent = {
-            Text("This is sheet content")
-        },
-        content = {
-        },
-        sheetState = bottomSheetState
-    )
 }

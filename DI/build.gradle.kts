@@ -17,6 +17,7 @@ kotlin {
                 implementation(projects.featureNavigationImpl)
                 implementation(projects.featureSettingsImpl)
                 implementation(projects.featurePreferencesImpl)
+                implementation(projects.featureHomeImpl)
             }
         }
     }

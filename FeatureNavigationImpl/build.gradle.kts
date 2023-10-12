@@ -2,6 +2,7 @@
 plugins {
     `multiplatform-library-convention`
     alias(libs.plugins.kotlinx.serialization)
+    id("org.jetbrains.compose")
 }
 
 android {
@@ -13,10 +14,10 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(libs.koin.core)
                 implementation(projects.utils)
                 implementation(projects.featureNavigationApi)
                 implementation(libs.precompose.core)
+                implementation(compose.material)
             }
         }
     }

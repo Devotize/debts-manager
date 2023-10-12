@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import com.shared.navigation.AppNavigation
 import com.shared.theme.CustomAppTheme
 import com.shared.ui.components.BottomBar
+import feature.navigation.api.bottom_sheet.controller.BottomSheetLayout
 import feature.navigation.api.router.NavigatorInitializer
 import feature.navigation.api.router.Router
 import moe.tlaster.precompose.navigation.rememberNavigator
@@ -48,8 +49,7 @@ private fun Content() {
                         BottomBar(router)
                     }
                 }
-
-
+                BottomSheetLayout()
             }
         )
     }

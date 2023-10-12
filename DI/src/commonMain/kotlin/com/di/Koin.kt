@@ -11,4 +11,5 @@ private val appModules = listOf(
     feature.settings.impl.di.DI,
     feature.navigation.impl.di.DI,
     feature.preferences.impl.DI,
+    feature.home.impl.di.DI
 )
