@@ -7,6 +7,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.navigation.NavOptions
 import moe.tlaster.precompose.navigation.Navigator
 
@@ -18,6 +20,12 @@ class RouterImpl : Router, NavigatorInitializer {
 
     private val navigationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
+    init {
+        currentScene.onEach {
+            println("xertz: currentScene: $it")
+        }.launchIn(navigationScope)
+    }
+
     override fun navigateTo(scene: AppScene, navOptions: NavOptions?) {
         currentScene.value = scene
         navigator.navigate(scene.route, navOptions)
@@ -25,6 +33,10 @@ class RouterImpl : Router, NavigatorInitializer {
 
     override fun setNavigation(navigator: Navigator) {
         this.navigator = navigator
+    }
+
+    override fun goBack() {
+        navigator.goBack()
     }
 
 }

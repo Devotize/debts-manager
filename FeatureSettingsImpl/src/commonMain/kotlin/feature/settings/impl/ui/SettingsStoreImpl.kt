@@ -1,5 +1,7 @@
 package feature.settings.impl.ui
 
+import feature.navigation.api.router.AppScene
+import feature.navigation.api.router.Router
 import feature.settings.api.prefs.AppThemePrefs
 import feature.settings.api.prefs.Theme
 import feature.settings.api.ui.SettingsStore
@@ -11,6 +13,7 @@ import kotlinx.coroutines.launch
 
 class SettingsStoreImpl(
     private val appThemePrefs: AppThemePrefs,
+    private val router: Router
 ) : SettingsStore() {
 
     override val state: StateFlow<SettingsState> = appThemePrefs.currentValue.map {
@@ -20,7 +23,7 @@ class SettingsStoreImpl(
     override fun dispatch(action: SettingsAction) {
         when (action) {
             DoSomething -> {
-                println("Doing something")
+                router.navigateTo(AppScene.Test)
             }
 
             is OnThemeChange -> {

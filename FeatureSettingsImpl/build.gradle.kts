@@ -17,6 +17,7 @@ kotlin {
                 implementation(projects.featureSettingsApi)
                 implementation(projects.featurePreferencesApi)
                 implementation(libs.russhwolf.multiplatformSettings.coroutines)
+                implementation(projects.featureNavigationApi)
             }
         }
     }

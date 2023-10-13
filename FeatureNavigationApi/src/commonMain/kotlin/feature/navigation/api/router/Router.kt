@@ -9,4 +9,6 @@ interface Router {
 
     fun navigateTo(scene: AppScene, navOptions: NavOptions? = null)
 
+    fun goBack()
+
 }

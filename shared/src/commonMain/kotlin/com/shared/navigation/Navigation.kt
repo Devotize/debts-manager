@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import com.shared.ui.scenes.HomeScene
 import com.shared.ui.scenes.SettingsScene
+import com.shared.ui.scenes.TestScene
 import feature.navigation.api.router.AppScene
 import feature.navigation.api.router.Router
 import moe.tlaster.precompose.navigation.NavHost
@@ -19,10 +20,11 @@ internal fun AppNavigation(navigator: Navigator, router: Router) {
         scene(AppScene.Home.route) {
             HomeScene()
         }
-        scene(
-            AppScene.Settings.route,
-        ) {
+        scene(AppScene.Settings.route) {
             SettingsScene()
+        }
+        scene(AppScene.Test.route) {
+            TestScene()
         }
     }
 }

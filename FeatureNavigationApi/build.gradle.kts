@@ -15,7 +15,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(projects.utils)
-                implementation(libs.precompose.core)
+                api(libs.precompose.core)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
