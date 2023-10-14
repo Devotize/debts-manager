@@ -12,7 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import feature.navigation.api.bottom_sheet.model.BSDestination
 import feature.navigation.api.bottom_sheet.model.BSDestination.Default
+import feature.navigation.api.bottom_sheet.model.BSDestination.Test2
 import feature.navigation.api.bottom_sheet.scenes.TestBottomSheet
+import feature.navigation.api.bottom_sheet.scenes.TestBottomSheet2
 import kotlinx.coroutines.CoroutineScope
 import utils.getSingle
 
@@ -51,6 +53,7 @@ fun BottomSheetLayout(controller: SheetStateHolder = getSingle()) {
         sheetContent = {
             when (currentBS) {
                 Default -> TestBottomSheet()
+                Test2 -> TestBottomSheet2()
             }
         },
         content = {

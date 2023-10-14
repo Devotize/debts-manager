@@ -14,6 +14,7 @@ class HomeStoreImpl(
     override fun dispatch(action: HomeAction) {
         when (action) {
             OpenBottomSheet -> bottomSheetController.open(BSDestination.Default)
+            OpenBottomSheet2 -> bottomSheetController.open(BSDestination.Test2)
         }
     }
 }

@@ -14,12 +14,12 @@ import androidx.compose.ui.unit.dp
 import library.images.painter.rememberPainter
 
 @Composable
-fun TestBottomSheet() {
+fun TestBottomSheet2() {
     Column(modifier = Modifier.fillMaxSize()) {
-        Text("This is bottom sheet")
+        Text("This is bottom sheet 2")
 
         val painter: Painter =
-            rememberPainter("https://i.pinimg.com/564x/4d/65/11/4d6511b40c4856231bc38dcc51363557.jpg")
+            rememberPainter("https://i.pinimg.com/564x/4b/b4/a3/4bb4a3a2f19824cc9e42f344845b225d.jpg")
         Image(
             modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(24.dp),
             painter = painter,

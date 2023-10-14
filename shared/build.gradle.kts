@@ -40,6 +40,7 @@ kotlin {
                 api(libs.precompose.koin)
                 api(libs.precompose.viewmodel)
                 api(libs.koin.core)
+                api(libs.napier)
                 sharedModules().forEach {
                     api(it)
                 }
@@ -99,8 +100,9 @@ fun sharedModules() = listOf(
     projects.utils,
     projects.di,
     projects.core,
+    projects.libraryImages,
     projects.featureSettingsApi,
     projects.featureNavigationApi,
     projects.featurePreferencesApi,
-    projects.featureHomeApi
+    projects.featureHomeApi,
 )

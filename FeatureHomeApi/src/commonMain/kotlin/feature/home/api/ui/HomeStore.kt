@@ -13,5 +13,6 @@ abstract class HomeStore : Store<HomeStore.HomeState, HomeStore.HomeAction>() {
     sealed interface HomeAction : Action
 
     data object OpenBottomSheet : HomeAction
+    data object OpenBottomSheet2 : HomeAction
 
 }

@@ -19,6 +19,8 @@ composeCompiler = "1.5.3"
 moko = "0.23.0"
 precompose = "1.5.4"
 multiplatformSettings = "1.0.0"
+imageLoader = "1.6.3"
+napier = "2.6.1"
 
 # Android versions
 androidxCore = "1.12.0"
@@ -74,6 +76,9 @@ precompose-core = { group = "moe.tlaster", name = "precompose", version.ref = "p
 precompose-koin = { group = "moe.tlaster", name = "precompose-koin", version.ref = "precompose" }
 precompose-viewmodel = { group = "moe.tlaster", name = "precompose-viewmodel", version.ref = "precompose" }
 
+#Images
+imageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageLoader" }
+
 # Settings
 russhwolf-multiplatformSettings-coroutines = { group = "com.russhwolf", name = "multiplatform-settings-coroutines", version.ref = "multiplatformSettings" }
 russhwolf-multiplatformSettings-datastore = { group = "com.russhwolf", name = "multiplatform-settings-datastore", version.ref = "multiplatformSettings" }
@@ -81,6 +86,8 @@ russhwolf-multiplatformSettings-datastore = { group = "com.russhwolf", name = "m
 # Datastore
 androidx-datastore-core = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
 androidx-datastore-preferencesCore = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
+
+napier = { group = "io.github.aakira", name = "napier", version.ref = "napier" }
 
 # Material Design
 androidx-compose-material = { group = "androidx.compose.material", name = "material" }

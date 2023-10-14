@@ -18,6 +18,7 @@ kotlin {
                 implementation(projects.featureSettingsImpl)
                 implementation(projects.featurePreferencesImpl)
                 implementation(projects.featureHomeImpl)
+                implementation(libs.napier)
             }
         }
     }

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "feature.navigation.api"
+    namespace = "library.images"
 }
 
 kotlin {
@@ -14,7 +14,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlinx.coroutines.core)
-                implementation(projects.utils)
                 api(libs.precompose.core)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
@@ -22,7 +21,16 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.animation)
                 implementation(libs.imageLoader)
-                implementation(projects.libraryImages)
+                implementation(libs.ktor.logging)
+                implementation(libs.ktor.encoding)
+                implementation(libs.ktor.contentNegotiation)
+                implementation(libs.ktor.serializationJson)
+                implementation(libs.napier)
+            }
+        }
+        androidMain {
+            dependencies {
+                implementation(libs.ktor.okhttp)
             }
         }
     }

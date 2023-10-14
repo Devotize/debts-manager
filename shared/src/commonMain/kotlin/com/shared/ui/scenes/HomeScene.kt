@@ -32,6 +32,15 @@ fun HomeScene(store: HomeStore = getSingle()) {
             },
             text = "Open Bottom Sheet"
         )
+        Spacer(Modifier.height(24.dp))
+        Text(
+            modifier = Modifier.clickable {
+                scope.launch {
+                    store.dispatch(HomeStore.OpenBottomSheet2)
+                }
+            },
+            text = "Open Bottom Sheet2"
+        )
     }
 
 }
