@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import moe.tlaster.precompose.navigation.NavOptions
@@ -33,6 +34,13 @@ class RouterImpl : Router, NavigatorInitializer {
 
     override fun setNavigation(navigator: Navigator) {
         this.navigator = navigator
+        listenToNavigator(navigator)
+    }
+
+    private fun listenToNavigator(navigator: Navigator) {
+        navigator.currentEntry.filterNotNull().onEach { navEntry ->
+            currentScene.value = AppScene.entries.first { it.route == navEntry.route.route }
+        }.launchIn(navigationScope)
     }
 
     override fun goBack() {
