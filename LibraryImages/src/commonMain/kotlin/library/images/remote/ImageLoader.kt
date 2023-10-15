@@ -8,12 +8,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import library.images.cache.LocalImageHolder
 import library.images.model.ImageState
 import library.images.model.PlatformBitmap
-import library.images.utils.logXertz
 
 class ImageLoader {
 
@@ -21,14 +22,27 @@ class ImageLoader {
 
     fun loadImage(url: String): Flow<ImageState> = flow {
         emit(ImageState.InProcess)
-        emit(fetchImageFromRemote(url))
+        emit(getImage(url))
+    }
+
+    private suspend fun getImage(url: String): ImageState {
+        val cacheImage = LocalImageHolder.findImage(url)
+        return if (cacheImage != null) {
+            ImageState.Success(cacheImage)
+        } else {
+            fetchImageFromRemote(url).also {
+                if (it is ImageState.Success) {
+                    LocalImageHolder.putImage(url, it.model)
+                }
+            }
+        }
     }
 
     private suspend fun fetchImageFromRemote(link: String): ImageState {
-        logXertz("fetchImageFromRemote called")
         val url = Url(link)
         return try {
             withContext(loaderScope.coroutineContext) {
+                delay(2000) //TODO for testing purposes
                 val byteArray = httpClient.get(url).readBytes()
                 ImageState.Success(PlatformBitmap.fromDecode(byteArray).asImageBitmap())
             }
