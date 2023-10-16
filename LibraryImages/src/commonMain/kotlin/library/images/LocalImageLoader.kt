@@ -2,7 +2,6 @@ package library.images
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidableCompositionLocal
-import androidx.compose.runtime.ProvidedValue
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import library.images.remote.ImageLoader
@@ -15,10 +14,6 @@ class ImageLoaderProvidable internal constructor(private val delegate: Providabl
         @Composable
         @ReadOnlyComposable
         get() = delegate.current
-
-    infix fun provides(value: ImageLoader): ProvidedValue<*> {
-        return delegate provides value
-    }
 
 }
 
