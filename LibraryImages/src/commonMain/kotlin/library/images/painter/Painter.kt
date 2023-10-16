@@ -8,14 +8,16 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
 import com.seiko.imageloader.rememberImagePainter
+import library.images.LocalImageLoader
 import library.images.model.ImageState
 import library.images.model.toPainter
 import library.images.remote.ImageLoader
 
 @Composable
-fun rememberPainter(url: String): Painter {
-
-    val imageLoader = ImageLoader() //TODO make use of CompositionLocal
+fun rememberPainter(
+    url: String,
+    imageLoader: ImageLoader = LocalImageLoader.current
+): Painter {
     val state by remember(url) { imageLoader.loadImage(url) }.collectAsState(ImageState.InProcess)
     return rememberImageStatePainter(state)
 }
