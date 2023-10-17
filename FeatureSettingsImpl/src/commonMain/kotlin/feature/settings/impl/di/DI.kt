@@ -10,5 +10,6 @@ import org.koin.dsl.module
 
 val DI = module {
     singleOf(::SettingsStoreImpl).bind<SettingsStore>()
+    @Suppress("OPT_IN_USAGE")
     singleOf(::AppThemePrefsImpl).bind<AppThemePrefs>()
 }

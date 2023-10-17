@@ -12,31 +12,34 @@ import library.images.LocalImageLoader
 import library.images.model.ImageState
 import library.images.model.toPainter
 import library.images.remote.ImageLoader
+import library.images.utils.logXertz
 
 @Composable
 fun rememberPainter(
     url: String,
+    placeholderPainter: (@Composable () -> Painter)? = null,
+    errorPainter: (@Composable () -> Painter)? = null,
     imageLoader: ImageLoader = LocalImageLoader.current
 ): Painter {
     val state by remember(url) { imageLoader.loadImage(url) }.collectAsState(ImageState.InProcess)
-    return rememberImageStatePainter(state)
+    return rememberImageStatePainter(state, placeholderPainter, errorPainter)
 }
 
 
 @Composable
-private fun rememberImageStatePainter(state: ImageState): Painter =
+private fun rememberImageStatePainter(
+    state: ImageState,
+    placeholderPainter: (@Composable () -> Painter)?,
+    errorPainter: (@Composable () -> Painter)?
+): Painter =
     when (state) {
-        is ImageState.InProcess -> remember {
-            StubPainter
-        }
-
-        is ImageState.Error -> remember {
-            StubPainter
-        }
-
+        is ImageState.InProcess -> placeholderPainter?.invoke() ?: StubPainter
+        is ImageState.Error -> errorPainter?.invoke() ?: StubPainter
         is ImageState.Success -> remember {
             state.model.toPainter()
         }
+    }.also {
+        logXertz("ImageState: $it, state: $state")
     }
 
 object StubPainter : Painter() {

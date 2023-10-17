@@ -5,17 +5,22 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import com.shared.components.DividerFull
 import com.shared.theme.B1_16Bold
 import com.shared.theme.LargePadding
 import com.shared.theme.XLargePadding
 import com.shared.utils.rememberKoin
+import com.sychev.db.common.MR
+import dev.icerock.moko.resources.compose.painterResource
 import feature.navigation.api.router.Router
 import library.images.painter.rememberPainter
 
@@ -36,11 +41,20 @@ fun TestScene(router: Router = rememberKoin()) {
         LazyColumn {
             itemsIndexed(testData, key = { i, item -> item }) { index, item ->
                 Column {
-                    val painter = rememberPainter(item)
+                    val painter = rememberPainter(
+                        url = item,
+                        placeholderPainter = {
+                            painterResource(MR.images.placeholder_deafult)
+                        },
+                        errorPainter = {
+                            painterResource(MR.images.placeholder_error)
+                        }
+                    )
                     Image(
-                        modifier = Modifier.fillMaxWidth().padding(XLargePadding),
+                        modifier = Modifier.fillMaxWidth().height(460.dp).padding(XLargePadding),
                         painter = painter,
-                        contentDescription = null
+                        contentDescription = null,
+                        contentScale = ContentScale.FillBounds
                     )
                     Text(
                         modifier = Modifier.padding(XLargePadding),
