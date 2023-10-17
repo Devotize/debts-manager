@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
-import library.images.painter.rememberPainter
+import library.images.painter.rememberRemotePainter
 
 @Composable
 fun TestBottomSheet2() {
@@ -19,7 +19,7 @@ fun TestBottomSheet2() {
         Text("This is bottom sheet 2")
 
         val painter: Painter =
-            rememberPainter("https://i.pinimg.com/564x/4b/b4/a3/4bb4a3a2f19824cc9e42f344845b225d.jpg")
+            rememberRemotePainter("https://i.pinimg.com/564x/4b/b4/a3/4bb4a3a2f19824cc9e42f344845b225d.jpg")
         Image(
             modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(24.dp),
             painter = painter,

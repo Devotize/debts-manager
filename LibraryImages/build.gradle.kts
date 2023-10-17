@@ -26,6 +26,7 @@ kotlin {
                 implementation(libs.ktor.contentNegotiation)
                 implementation(libs.ktor.serializationJson)
                 implementation(libs.napier)
+                implementation(libs.moko.resources)
             }
         }
         androidMain {

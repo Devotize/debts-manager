@@ -7,15 +7,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.painter.Painter
-import com.seiko.imageloader.rememberImagePainter
 import library.images.LocalImageLoader
 import library.images.model.ImageState
 import library.images.model.toPainter
 import library.images.remote.ImageLoader
-import library.images.utils.logXertz
 
 @Composable
-fun rememberPainter(
+fun rememberRemotePainter(
     url: String,
     placeholderPainter: (@Composable () -> Painter)? = null,
     errorPainter: (@Composable () -> Painter)? = null,
@@ -24,7 +22,6 @@ fun rememberPainter(
     val state by remember(url) { imageLoader.loadImage(url) }.collectAsState(ImageState.InProcess)
     return rememberImageStatePainter(state, placeholderPainter, errorPainter)
 }
-
 
 @Composable
 private fun rememberImageStatePainter(
@@ -38,14 +35,9 @@ private fun rememberImageStatePainter(
         is ImageState.Success -> remember {
             state.model.toPainter()
         }
-    }.also {
-        logXertz("ImageState: $it, state: $state")
     }
 
 object StubPainter : Painter() {
     override val intrinsicSize get() = Size.Unspecified
     override fun DrawScope.onDraw() = Unit
 }
-
-@Composable
-private fun test() = rememberImagePainter("") //TODO remove

@@ -11,7 +11,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.flowOn
 import library.images.cache.LocalImageHolder
 import library.images.model.ImageState
 import library.images.model.PlatformBitmap
@@ -23,7 +23,8 @@ class ImageLoader {
     fun loadImage(url: String): Flow<ImageState> = flow {
         emit(ImageState.InProcess)
         emit(getImage(url))
-    }
+    }.flowOn(loaderScope.coroutineContext)
+
 
     private suspend fun getImage(url: String): ImageState {
         val cacheImage = LocalImageHolder.findImage(url)
@@ -41,11 +42,9 @@ class ImageLoader {
     private suspend fun fetchImageFromRemote(link: String): ImageState {
         val url = Url(link)
         return try {
-            withContext(loaderScope.coroutineContext) {
                 delay(2000) //TODO for testing purposes
                 val byteArray = httpClient.get(url).readBytes()
                 ImageState.Success(PlatformBitmap.fromDecode(byteArray).asImageBitmap())
-            }
         } catch (e: IOException) {
             ImageState.Error(e.cause?.message ?: e.message.toString())
         }

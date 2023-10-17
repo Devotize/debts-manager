@@ -22,7 +22,7 @@ import com.shared.utils.rememberKoin
 import com.sychev.db.common.MR
 import dev.icerock.moko.resources.compose.painterResource
 import feature.navigation.api.router.Router
-import library.images.painter.rememberPainter
+import library.images.painter.rememberRemotePainter
 
 @Composable
 fun TestScene(router: Router = rememberKoin()) {
@@ -41,7 +41,7 @@ fun TestScene(router: Router = rememberKoin()) {
         LazyColumn {
             itemsIndexed(testData, key = { i, item -> item }) { index, item ->
                 Column {
-                    val painter = rememberPainter(
+                    val painter = rememberRemotePainter(
                         url = item,
                         placeholderPainter = {
                             painterResource(MR.images.placeholder_deafult)
