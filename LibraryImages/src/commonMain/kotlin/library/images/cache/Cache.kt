@@ -24,3 +24,11 @@ interface ImageCacheInteractor {
 }
 
 expect class PlatformInMemoryCache() : ImageCacheInteractor
+
+expect class PlatformDiskCache private constructor() : ImageCacheInteractor {
+
+    companion object {
+        fun createInstance(): PlatformDiskCache
+    }
+
+}

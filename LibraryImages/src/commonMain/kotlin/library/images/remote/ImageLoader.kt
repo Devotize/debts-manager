@@ -23,7 +23,7 @@ class ImageLoader {
     fun loadImage(url: String): Flow<ImageState> = flow {
         emit(ImageState.InProcess)
         emit(getImage(url))
-    }.flowOn(loaderScope.coroutineContext)
+    }.flowOn(Dispatchers.IO)
 
 
     private suspend fun getImage(url: String): ImageState {

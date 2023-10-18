@@ -32,6 +32,7 @@ kotlin {
         androidMain {
             dependencies {
                 implementation(libs.ktor.okhttp)
+                implementation(libs.diskLruCache)
             }
         }
     }

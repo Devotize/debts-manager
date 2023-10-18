@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation(projects.shared)
+    implementation(projects.libraryImages)
 
     api(compose.runtime)
     api(compose.foundation)

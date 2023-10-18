@@ -26,6 +26,7 @@ napier = "2.6.1"
 androidxCore = "1.12.0"
 activity = "1.8.0"
 datastore = "1.0.0"
+diskLruCache = "2.0.2"
 
 # Root versions
 versionCode = "001"
@@ -88,6 +89,8 @@ androidx-datastore-core = { group = "androidx.datastore", name = "datastore", ve
 androidx-datastore-preferencesCore = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
 
 napier = { group = "io.github.aakira", name = "napier", version.ref = "napier" }
+
+diskLruCache = { group = "com.jakewharton", name = "disklrucache", version.ref = "diskLruCache" }
 
 # Material Design
 androidx-compose-material = { group = "androidx.compose.material", name = "material" }
