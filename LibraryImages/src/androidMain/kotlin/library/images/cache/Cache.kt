@@ -4,7 +4,7 @@ import android.util.LruCache
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 
-actual class PlatformImageCache : ImageCacheInteractor {
+actual class PlatformInMemoryCache : ImageCacheInteractor {
 
     private val lruCache: LruCache<String, ImageBitmap>
 

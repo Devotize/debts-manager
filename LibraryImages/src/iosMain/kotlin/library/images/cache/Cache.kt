@@ -3,7 +3,7 @@ package library.images.cache
 import androidx.compose.ui.graphics.ImageBitmap
 import platform.Foundation.NSCache
 
-actual class PlatformImageCache : ImageCacheInteractor {
+actual class PlatformInMemoryCache : ImageCacheInteractor {
 
     private val nsCache: NSCache = NSCache().apply {
         countLimit = 100u

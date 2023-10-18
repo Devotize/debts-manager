@@ -4,14 +4,14 @@ import androidx.compose.ui.graphics.ImageBitmap
 
 object LocalImageHolder {
 
-    private val imageCaches = PlatformImageCache()
+    private val inMemoryCache = PlatformInMemoryCache()
 
     fun putImage(key: String, model: ImageBitmap) {
-        imageCaches.putImage(key, model)
+        inMemoryCache.putImage(key, model)
     }
 
     fun findImage(key: String): ImageBitmap? =
-        imageCaches.findImage(key)
+        inMemoryCache.findImage(key)
 
 }
 
@@ -23,4 +23,4 @@ interface ImageCacheInteractor {
 
 }
 
-expect class PlatformImageCache() : ImageCacheInteractor
+expect class PlatformInMemoryCache() : ImageCacheInteractor
