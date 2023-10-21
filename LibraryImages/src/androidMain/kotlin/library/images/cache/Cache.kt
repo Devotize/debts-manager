@@ -13,9 +13,10 @@ import com.jakewharton.disklrucache.DiskLruCache
 import io.github.aakira.napier.Napier
 import library.images.initializer.LOG_TAG
 import library.images.initializer.pergamon
+import library.images.utils.logXertz
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
-import java.nio.ByteBuffer
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -64,12 +65,16 @@ actual class PlatformDiskCache : ImageCacheInteractor {
 
     init {
         val cacheDir = getDiskCacheDir(pergamon.appContext)
+        if (!cacheDir.exists()) {
+            cacheDir.mkdirs()
+        }
+        resetDiskCache(cacheDir)
         diskLruCache = DiskLruCache.open(
             cacheDir,
             1,
             1,
             DISK_CACHE_SIZE.toLong()
-        ) //TODO full research how lru cache works
+        )
     }
 
 
@@ -77,6 +82,7 @@ actual class PlatformDiskCache : ImageCacheInteractor {
         val hashKey = key.toStorageHashKey()
         try {
             val editor = diskLruCache.edit(hashKey)
+            logXertz("editor: $editor")
             val byteArray = model.asAndroidBitmap().toByteArray()
             val outputStream = editor.newOutputStream(0)
             outputStream.write(byteArray)
@@ -85,21 +91,22 @@ actual class PlatformDiskCache : ImageCacheInteractor {
             Napier.i(tag = LOG_TAG) { "Successfully put image with key: $hashKey to disk cache" }
         } catch (e: Exception) {
             Napier.e(tag = LOG_TAG) { "Caught error while trying to put image with key: $hashKey to disk cache, reason: ${e.localizedMessage}" }
+        } finally {
+            diskLruCache.flush()
         }
-
     }
 
     override fun findImage(key: String): ImageBitmap? {
         val hashKey = key.toStorageHashKey()
         val result = try {
-            val editor = diskLruCache.edit(hashKey)
-            val baseOs: InputStream? = editor.newInputStream(0)
-            baseOs?.toComposeBitmap().also {
-                if (it != null) {
-                    Napier.i(tag = LOG_TAG) { "Successfully extracted image with key: $hashKey from disk cache" }
-                } else {
-                    Napier.i(tag = LOG_TAG) { "Image with key: $hashKey not found in disk cache" }
-                }
+            val snapshot: DiskLruCache.Snapshot? = diskLruCache.get(hashKey)
+            if (snapshot != null) {
+                Napier.i(tag = LOG_TAG) { "Successfully found image with key: $hashKey from disk cache" }
+                val baseIs: InputStream = snapshot.getInputStream(0)
+                baseIs.toComposeBitmap()
+            } else {
+                Napier.i(tag = LOG_TAG) { "Image with key: $hashKey not found in disk cache" }
+                null
             }
         } catch (e: Exception) {
             Napier.e(tag = LOG_TAG) { "Caught error while trying to extract image with key: $hashKey from disk cache, reason: ${e.localizedMessage}" }
@@ -108,8 +115,13 @@ actual class PlatformDiskCache : ImageCacheInteractor {
         return result
     }
 
-    // Creates a unique subdirectory of the designated app cache directory. Tries to use external
-    // but if not mounted, falls back on internal storage.
+    /*
+    Creates a unique subdirectory of the designated app cache directory. Tries to use external
+    but if not mounted, falls back on internal storage.
+    When the SD card exists or the SD is not removable, the cache path is etExternalCacheDir(). For example:
+    /sdcard/Android/data/<application package>/cache otherwise the cache path is getCacheDir() For example:
+    /data/data/<application package>/cache
+    */
     private fun getDiskCacheDir(context: Context): File {
         // Check if media is mounted or storage is built-in, if so, try and use external cache dir
         // otherwise use internal cache dir
@@ -126,10 +138,9 @@ actual class PlatformDiskCache : ImageCacheInteractor {
     }
 
     private fun Bitmap.toByteArray(): ByteArray {
-        val byteSize = rowBytes * height
-        val byteBuffer = ByteBuffer.allocate(byteSize)
-        copyPixelsToBuffer(byteBuffer)
-        return byteBuffer.array()
+        val byteArrayOS = ByteArrayOutputStream()
+        this.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOS)
+        return byteArrayOS.toByteArray()
     }
 
     private fun InputStream.toComposeBitmap(): ImageBitmap =
@@ -155,6 +166,16 @@ actual class PlatformDiskCache : ImageCacheInteractor {
             sb.append(hex)
         }
         return sb.toString()
+    }
+
+    private fun resetDiskCache(cacheDir: File) {
+        val temp = DiskLruCache.open(
+            cacheDir,
+            1,
+            1,
+            DISK_CACHE_SIZE.toLong()
+        )
+        temp.delete()
     }
 
 }

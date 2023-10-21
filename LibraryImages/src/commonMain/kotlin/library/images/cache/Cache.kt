@@ -8,7 +8,7 @@ object LocalImageHolder {
     private val diskCache: PlatformDiskCache by lazy { PlatformDiskCache.getInstance() }
 
     fun putImage(key: String, model: ImageBitmap) {
-//        inMemoryCache.putImage(key, model)
+        inMemoryCache.putImage(key, model)
         diskCache.putImage(key, model)
     }
 
