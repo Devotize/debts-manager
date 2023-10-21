@@ -9,13 +9,11 @@ object LocalImageHolder {
 
     fun putImage(key: String, model: ImageBitmap) {
 //        inMemoryCache.putImage(key, model)
-        diskCache.putImage(key.hashCode().toString(), model)//TODO change hash code to unique str
+        diskCache.putImage(key, model)
     }
 
     fun findImage(key: String): ImageBitmap? =
-        inMemoryCache.findImage(key) ?: diskCache.findImage(
-            key.hashCode().toString()
-        )//TODO change hash code to unique str
+        inMemoryCache.findImage(key) ?: diskCache.findImage(key)
 
 }
 
