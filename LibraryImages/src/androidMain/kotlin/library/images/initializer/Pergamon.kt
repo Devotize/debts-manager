@@ -1,3 +1,4 @@
+@file:JvmName("PergamonJvm") //https://youtrack.jetbrains.com/issue/KT-21186
 package library.images.initializer
 
 import android.app.Application
@@ -17,4 +18,6 @@ class Pergamon private constructor(context: Context) {
     }
 
 }
+
+
 

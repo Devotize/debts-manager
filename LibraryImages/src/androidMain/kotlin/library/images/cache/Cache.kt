@@ -1,14 +1,21 @@
 package library.images.cache
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Environment
 import android.os.Environment.isExternalStorageRemovable
 import android.util.LruCache
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import com.jakewharton.disklrucache.DiskLruCache
+import io.github.aakira.napier.Napier
+import library.images.initializer.LOG_TAG
 import library.images.initializer.pergamon
 import java.io.File
+import java.io.InputStream
+import java.nio.ByteBuffer
 
 actual class PlatformInMemoryCache : ImageCacheInteractor {
 
@@ -42,7 +49,7 @@ actual class PlatformDiskCache : ImageCacheInteractor {
         private const val DISK_CACHE_SUBDIR = "thumbnails"
 
         private var instance: PlatformDiskCache? = null
-        actual fun createInstance(): PlatformDiskCache {
+        actual fun getInstance(): PlatformDiskCache {
             if (instance != null) error("Instance of PlatformDiskCache already created")
             return PlatformDiskCache().also {
                 instance = it
@@ -64,11 +71,36 @@ actual class PlatformDiskCache : ImageCacheInteractor {
 
 
     override fun putImage(key: String, model: ImageBitmap) {
-        val editor = diskLruCache.edit(key)
+        try {
+            val editor = diskLruCache.edit(key)
+            val byteArray = model.asAndroidBitmap().toByteArray()
+            val outputStream = editor.newOutputStream(0)
+            outputStream.write(byteArray)
+            outputStream.close()
+            editor.commit()
+            Napier.i(tag = LOG_TAG) { "Successfully put image with key: $key to disk cache" }
+        } catch (e: Exception) {
+            Napier.e(tag = LOG_TAG) { "Caught error while trying to put image to disk cache, reason: ${e.localizedMessage}" }
+        }
+
     }
 
     override fun findImage(key: String): ImageBitmap? {
-        TODO("Not yet implemented")
+        val result = try {
+            val editor = diskLruCache.edit(key)
+            val baseOs: InputStream? = editor.newInputStream(0)
+            baseOs?.toComposeBitmap().also {
+                if (it != null) {
+                    Napier.i(tag = LOG_TAG) { "Successfully extracted image with key: $key from disk cache" }
+                } else {
+                    Napier.i(tag = LOG_TAG) { "Image with key: $key not found in disk cache" }
+                }
+            }
+        } catch (e: Exception) {
+            Napier.e(tag = LOG_TAG) { "Caught error while trying to extract image from disk cache, reason: ${e.localizedMessage}" }
+            null
+        }
+        return result
     }
 
     // Creates a unique subdirectory of the designated app cache directory. Tries to use external
@@ -88,4 +120,13 @@ actual class PlatformDiskCache : ImageCacheInteractor {
         return File(cachePath + File.separator + DISK_CACHE_SUBDIR)
     }
 
+    private fun Bitmap.toByteArray(): ByteArray {
+        val byteSize = rowBytes * height
+        val byteBuffer = ByteBuffer.allocate(byteSize)
+        copyPixelsToBuffer(byteBuffer)
+        return byteBuffer.array()
+    }
+
+    private fun InputStream.toComposeBitmap(): ImageBitmap =
+        BitmapFactory.decodeStream(this).asImageBitmap()
 }

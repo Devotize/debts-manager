@@ -33,7 +33,7 @@ actual class PlatformDiskCache : ImageCacheInteractor {
     @ThreadLocal
     actual companion object {
         private var instance: PlatformDiskCache? = null
-        actual fun createInstance(): PlatformDiskCache {
+        actual fun getInstance(): PlatformDiskCache {
             if (instance != null) error("Instance of PlatformDiskCache already created")
             return PlatformDiskCache().also {
                 instance = it
