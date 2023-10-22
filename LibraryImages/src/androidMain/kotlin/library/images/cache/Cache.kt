@@ -1,7 +1,6 @@
 package library.images.cache
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
 import android.os.Environment.isExternalStorageRemovable
@@ -13,8 +12,7 @@ import com.jakewharton.disklrucache.DiskLruCache
 import io.github.aakira.napier.Napier
 import library.images.initializer.LOG_TAG
 import library.images.initializer.pergamon
-import library.images.utils.logXertz
-import java.io.ByteArrayOutputStream
+import library.images.model.PlatformBitmap
 import java.io.File
 import java.io.InputStream
 import java.security.MessageDigest
@@ -37,8 +35,8 @@ actual class PlatformInMemoryCache : ImageCacheInteractor {
         }
     }
 
-    override fun putImage(key: String, model: ImageBitmap) {
-        lruCache.put(key, model)
+    override fun putImageBytes(key: String, model: ByteArray) {
+        lruCache.put(key, PlatformBitmap.fromDecode(model).asImageBitmap())
     }
 
     override fun findImage(key: String): ImageBitmap? =
@@ -78,14 +76,12 @@ actual class PlatformDiskCache : ImageCacheInteractor {
     }
 
 
-    override fun putImage(key: String, model: ImageBitmap) {
+    override fun putImageBytes(key: String, model: ByteArray) {
         val hashKey = key.toStorageHashKey()
         try {
             val editor = diskLruCache.edit(hashKey)
-            logXertz("editor: $editor")
-            val byteArray = model.asAndroidBitmap().toByteArray()
             val outputStream = editor.newOutputStream(0)
-            outputStream.write(byteArray)
+            outputStream.write(model)
             outputStream.close()
             editor.commit()
             Napier.i(tag = LOG_TAG) { "Successfully put image with key: $hashKey to disk cache" }
@@ -135,12 +131,6 @@ actual class PlatformDiskCache : ImageCacheInteractor {
             }
 
         return File(cachePath + File.separator + DISK_CACHE_SUBDIR)
-    }
-
-    private fun Bitmap.toByteArray(): ByteArray {
-        val byteArrayOS = ByteArrayOutputStream()
-        this.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOS)
-        return byteArrayOS.toByteArray()
     }
 
     private fun InputStream.toComposeBitmap(): ImageBitmap =

@@ -1,6 +1,8 @@
 package library.images.cache
 
 import androidx.compose.ui.graphics.ImageBitmap
+import library.images.cache.internal.DiskCache
+import library.images.model.PlatformBitmap
 import platform.Foundation.NSCache
 import kotlin.native.concurrent.ThreadLocal
 
@@ -8,11 +10,11 @@ actual class PlatformInMemoryCache : ImageCacheInteractor {
 
     private val nsCache: NSCache = NSCache().apply {
         countLimit = 100u
-        totalCostLimit = (1024u * 1024u * 100u).toULong()// 100 MB
+        totalCostLimit = (1024u * 1024u * 10u).toULong()// 10 MB
     }
 
-    override fun putImage(key: String, model: ImageBitmap) {
-        nsCache.setObject(model, key)
+    override fun putImageBytes(key: String, model: ByteArray) {
+        nsCache.setObject(PlatformBitmap.fromDecode(model).asImageBitmap(), key)
     }
 
     override fun findImage(key: String): ImageBitmap? =
@@ -22,12 +24,14 @@ actual class PlatformInMemoryCache : ImageCacheInteractor {
 
 actual class PlatformDiskCache : ImageCacheInteractor {
 
-    override fun putImage(key: String, model: ImageBitmap) {
-        TODO("Not yet implemented")
+    private val diskLruCache = DiskCache()
+
+    override fun putImageBytes(key: String, model: ByteArray) {
+        diskLruCache.put(key, model)
     }
 
     override fun findImage(key: String): ImageBitmap? {
-        TODO("Not yet implemented")
+        return diskLruCache.get(key)?.let { PlatformBitmap.fromDecode(it).asImageBitmap() }
     }
 
     @ThreadLocal

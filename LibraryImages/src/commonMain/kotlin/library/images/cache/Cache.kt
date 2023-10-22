@@ -7,9 +7,9 @@ object LocalImageHolder {
     private val inMemoryCache = PlatformInMemoryCache()
     private val diskCache: PlatformDiskCache by lazy { PlatformDiskCache.getInstance() }
 
-    fun putImage(key: String, model: ImageBitmap) {
-        inMemoryCache.putImage(key, model)
-        diskCache.putImage(key, model)
+    fun putImageBytes(key: String, model: ByteArray) {
+        inMemoryCache.putImageBytes(key, model)
+        diskCache.putImageBytes(key, model)
     }
 
     fun findImage(key: String): ImageBitmap? =
@@ -19,7 +19,7 @@ object LocalImageHolder {
 
 interface ImageCacheInteractor {
 
-    fun putImage(key: String, model: ImageBitmap)
+    fun putImageBytes(key: String, model: ByteArray)
 
     fun findImage(key: String): ImageBitmap?
 

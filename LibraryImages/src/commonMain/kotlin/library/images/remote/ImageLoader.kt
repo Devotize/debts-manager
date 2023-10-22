@@ -8,7 +8,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -31,20 +30,16 @@ class ImageLoader {
         return if (cacheImage != null) {
             ImageState.Success(cacheImage)
         } else {
-            fetchImageFromRemote(url).also {
-                if (it is ImageState.Success) {
-                    LocalImageHolder.putImage(url, it.model)
-                }
-            }
+            fetchImageFromRemote(url)
         }
     }
 
     private suspend fun fetchImageFromRemote(link: String): ImageState {
         val url = Url(link)
         return try {
-                delay(2000) //TODO for testing purposes
                 val byteArray = httpClient.get(url).readBytes()
-                ImageState.Success(PlatformBitmap.fromDecode(byteArray).asImageBitmap())
+            LocalImageHolder.putImageBytes(link, byteArray)
+            ImageState.Success(PlatformBitmap.fromDecode(byteArray).asImageBitmap())
         } catch (e: IOException) {
             ImageState.Error(e.cause?.message ?: e.message.toString())
         }
