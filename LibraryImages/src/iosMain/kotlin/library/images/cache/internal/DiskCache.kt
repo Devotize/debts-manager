@@ -8,7 +8,7 @@ import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
 import kotlinx.cinterop.value
-import library.images.initializer.LOG_TAG
+import library.images.utils.LOG_TAG
 import library.images.utils.lastPathComponentWithoutFileExt
 import library.images.utils.toByteArray
 import library.images.utils.toDiskCacheKey

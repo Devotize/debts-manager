@@ -19,6 +19,7 @@ fun rememberRemotePainter(
     errorPainter: (@Composable () -> Painter)? = null,
     imageLoader: ImageLoader = LocalImageLoader.current
 ): Painter {
+    InitCacheWithContext()
     val state by remember(url) { imageLoader.loadImage(url) }.collectAsState(ImageState.InProcess)
     return rememberImageStatePainter(state, placeholderPainter, errorPainter)
 }
@@ -41,3 +42,6 @@ object StubPainter : Painter() {
     override val intrinsicSize get() = Size.Unspecified
     override fun DrawScope.onDraw() = Unit
 }
+
+@Composable
+expect fun InitCacheWithContext()

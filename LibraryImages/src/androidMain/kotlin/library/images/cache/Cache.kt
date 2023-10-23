@@ -10,9 +10,8 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import com.jakewharton.disklrucache.DiskLruCache
 import io.github.aakira.napier.Napier
-import library.images.initializer.LOG_TAG
-import library.images.initializer.pergamon
 import library.images.model.PlatformBitmap
+import library.images.utils.LOG_TAG
 import java.io.File
 import java.io.InputStream
 import java.security.MessageDigest
@@ -51,30 +50,36 @@ actual class PlatformDiskCache : ImageCacheInteractor {
         private const val DISK_CACHE_SUBDIR = "thumbnails"
 
         private var instance: PlatformDiskCache? = null
-        actual fun getInstance(): PlatformDiskCache {
-            if (instance != null) error("Instance of PlatformDiskCache already created")
-            return PlatformDiskCache().also {
+        actual fun getInstance(): PlatformDiskCache =
+            instance ?: PlatformDiskCache().also {
                 instance = it
             }
-        }
+
+        val isInitialized: Boolean
+            get() = instance != null
+
     }
 
+    private var diskLruCacheNullable: DiskLruCache? = null
     private val diskLruCache: DiskLruCache
+        get() = diskLruCacheNullable ?: error("DiskLruCache has not beet initialized")
 
-    init {
-        val cacheDir = getDiskCacheDir(pergamon.appContext)
+    /**
+     * Should call this method once, right after first initialization
+     */
+    fun initializeWithContext(context: Context) {
+        val cacheDir = getDiskCacheDir(context)
         if (!cacheDir.exists()) {
             cacheDir.mkdirs()
         }
         resetDiskCache(cacheDir)
-        diskLruCache = DiskLruCache.open(
+        diskLruCacheNullable = DiskLruCache.open(
             cacheDir,
             1,
             1,
             DISK_CACHE_SIZE.toLong()
         )
     }
-
 
     override fun putImageBytes(key: String, model: ByteArray) {
         val hashKey = key.toStorageHashKey()
